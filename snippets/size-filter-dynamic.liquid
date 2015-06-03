@@ -4,16 +4,35 @@
     <a href="#" class="size-filter-option js-current-filter">All</a>
 
     {% assign available_sizes = '' %}
-    {% for product in collections.frontpage.products limit: limit %}
-      {% for variant in product.variants %}
-        {% unless available_sizes contains variant.title %}
-          {% if  variant.available %}
-             {% capture available_sizes %}{{ available_sizes }}, {{ variant.title }}{% endcapture %}
-            <a href="#" class="size-filter-option">{{ variant.title }}</a>
-          {% endif %}
-        {% endunless %}
-      {% endfor %}
+    {% for product in collection.products limit: limit %}
+		{% for option in product.options %}
+        {% for variant in product.variants %}
+          {% unless available_sizes contains variant.options[0] %}
+            {% if  variant.available %}
+					    {% if product.options[0] contains 'Size' %} 
+                {% capture available_sizes %}{{ available_sizes }}, {{ variant.options[0] }}{% endcapture %}
+                <a href="#" class="size-filter-option">{{ variant.options[0] }}</a>
+    				  {% endif %}   
+            {% endif %}
+          {% endunless %}
+          {% unless available_sizes contains variant.options[1] %}
+            {% if  variant.available %}
+					    {% if product.options[1] contains 'Size' %} 
+                {% capture available_sizes %}{{ available_sizes }}, {{ variant.options[1] }}{% endcapture %}
+    					  <a href="#" class="size-filter-option">{{ variant.options[1] }}</a>
+    				  {% endif %}   
+            {% endif %}
+          {% endunless %}
+          {% unless available_sizes contains variant.options[2] %}
+            {% if  variant.available %}
+					    {% if product.options[2] contains 'Size' %} 
+                {% capture available_sizes %}{{ available_sizes }}, {{ variant.options[2] }}{% endcapture %}
+    					  <a href="#" class="size-filter-option">{{ variant.options[2] }}</a>
+    				  {% endif %}   
+            {% endif %}
+          {% endunless %}
+        {% endfor %}
+    	{% endfor %}   
     {% endfor %}
-
   </nav>
 </div>
